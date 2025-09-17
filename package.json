@@ -1,0 +1,37 @@
+{
+  "name": "@currentjs/provider-mysql",
+  "version": "0.1.0",
+  "description": "MySQL database provider for currentjs framework",
+  "license": "LGPL-3.0",
+  "author": "Konstantin Zavalny",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/currentjs/provider-mysql.git"
+  },
+  "homepage": "https://github.com/currentjs/provider-mysql",
+  "bugs": "https://github.com/currentjs/provider-mysql/issues",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:tests": "tsc -p tsconfig.test.json",
+    "clean": "rm -rf dist tests-dist",
+    "test": "npm run build:tests && node tests-dist/tests/run-tests.js",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.0",
+    "@currentjs/provider": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^5.6.3"
+  }
+}
