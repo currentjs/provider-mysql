@@ -2,9 +2,6 @@
 .vscode
 .idea
 dist
-tests-dist
+dist-test
 node_modules
 package-lock.json
-
-#tmp:
-tests
