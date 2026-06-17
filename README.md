@@ -1,23 +1,23 @@
-# @currentjs/provider-mysql 🐬
+# @currentjs/provider-mysql
 
 > *"Because your data needs a home, and MySQL is like that reliable friend who's been around since the late 90s and just works."*
 
 A MySQL database provider that speaks fluent TypeScript and makes your generated code feel right at home with its favorite relational database. Part of the `currentjs` framework ecosystem, but perfectly capable of standing on its own two fins.
 
-## What Is This Thing? 🤔
+## What Is This Thing?
 
 This is a database provider that bridges the gap between your shiny TypeScript applications and the MySQL database. Think of it as a translator who's fluent in both "modern web development" and "I've been storing data since before JavaScript was cool."
 
 **Key Philosophy**: Named parameters are better than question marks, proper error handling beats mysterious crashes, and connection pooling is for grown-ups.
 
-## Installation 📦
+## Installation
 
 **Using `@currentjs/gen` (Code Generator)** - *Recommended*
 ```bash
 # No manual installation needed 
 # The provider is automatically included when you generate a project with MySQL
-currentjs create app my-app
-# Choose MySQL when prompted for database provider
+currentjs init
+# Choose MySQL in app.yaml 
 ```
 (for more details see the [documentation](https://github.com/currentjs/gen))
 
@@ -28,16 +28,7 @@ npm install @currentjs/provider-mysql
 
 > 💡 **Pro Tip**: If you're using the `currentjs` code generator, this provider is automatically configured and ready to go. The generated stores use it seamlessly, so you can focus on your business logic instead of connection strings!
 
-## Features That Actually Work ✨
-
-- **🔌 Clean Connection Management**: Init, query, health check, shutdown - like a well-behaved citizen
-- **📝 Named Parameters**: Write `:userId` instead of remembering which `?` is which (your future self will thank you)
-- **🎯 Proper Error Classes**: Know exactly what went wrong and where (no more guessing games)
-- **❤️ Health Checks**: Built-in connection monitoring because databases sometimes need a wellness check
-- **🔄 TypeScript-First**: Full type safety from connection to query results
-- **⚡ mysql2 Under the Hood**: Fast, reliable, and battle-tested (we're not reinventing wheels here)
-
-## Quick Start (The "I Just Want It To Work" Guide) 🏃‍♂️
+## Quick Start️
 
 ```typescript
 import { ProviderMysql } from '@currentjs/provider-mysql';
@@ -73,7 +64,7 @@ if (await provider.health()) {
 await provider.shutdown();
 ```
 
-## In Generated Applications (Where It Really Shines) 🌟
+## In Generated Applications (Where It Really Shines)
 
 When you use `@currentjs/gen` to create an application, this provider is automatically wired up in your generated stores:
 
@@ -110,7 +101,7 @@ export class PostStoreImpl implements IPostStore {
 
 **No configuration needed** - the generated application sets everything up automatically based on your environment variables!
 
-## Query Results (What You Get Back) 📊
+## Query Results (What You Get Back)
 
 The provider returns results in a standardized format that plays nicely with TypeScript:
 
@@ -122,14 +113,14 @@ console.log(result.success);     // true if query succeeded
 console.log(result.fields);      // Field metadata (name, type, nullable)
 
 // For INSERT/UPDATE/DELETE queries
-const result = await provider.query('UPDATE users SET status = :status WHERE id = :id', 
+const insertResult = await provider.query('UPDATE users SET status = :status WHERE id = :id', 
   { status: 'active', id: 123 });
-console.log(result.affectedRows); // How many rows were changed
-console.log(result.insertId);     // Auto-generated ID (for INSERTs)
-console.log(result.success);      // true if query succeeded
+console.log(insertResult.affectedRows); // How many rows were changed
+console.log(insertResult.insertId);     // Auto-generated ID (for INSERTs)
+console.log(insertResult.success);      // true if query succeeded
 ```
 
-## Named Parameters (Because Life's Too Short for Question Marks) 🏷️
+## Named Parameters (Because Life's Too Short for Question Marks)
 
 Say goodbye to this madness:
 ```sql
@@ -148,7 +139,7 @@ await provider.query(
 
 **How it works**: The provider automatically converts `:paramName` to `?` parameters under the hood, maintaining compatibility with mysql2 while giving you readable queries.
 
-## Error Handling (Because Things Go Wrong) 🚨
+## Error Handling (Because Things Go Wrong)
 
 The provider includes specific error classes so you know exactly what went sideways:
 
@@ -186,7 +177,7 @@ try {
 }
 ```
 
-## Health Monitoring (Keeping Your Database Happy) 💗
+## Health Monitoring
 
 The built-in health check is perfect for monitoring dashboards and load balancers:
 
@@ -229,7 +220,7 @@ const provider = new ProviderMysql({
 });
 ```
 
-## TypeScript Support (First-Class Citizen) 📝
+## TypeScript Support (First-Class Citizen)
 
 Full TypeScript support with proper generic types:
 
@@ -255,19 +246,13 @@ if (user) {
 }
 ```
 
-## Part of a Bigger Picture 🌍
+## Part of a Bigger Picture
 
-This provider is designed as the data layer for the `currentjs` code generation framework. It's built to work seamlessly with:
-
-- **Generated stores** that handle your business data
-- **Generated services** that implement your business logic  
-- **Generated controllers** that expose your APIs
-- **`@currentjs/router`** for HTTP request handling
-- **`@currentjs/templating`** for rendering responses
+This provider is designed as the data layer for the `currentjs` code generation framework.
 
 But it's also perfectly usable as a standalone MySQL client in any TypeScript application!
 
-## Environment Variables (The Usual Suspects) 🌐
+## Environment Variables
 
 For generated applications, these environment variables are automatically read:
 
@@ -322,10 +307,6 @@ const result = await provider.query<User>(
 - ✅ Built-in health checking
 - ✅ Consistent result format
 - ✅ No breaking changes to your SQL
-
-## Vibe Engineering 🎵
-
-This package was primarily developed through conversations with Claude 4 Sonnet, which explains why it has sensible defaults and actually enjoyable error messages. The result is a MySQL provider that's both powerful and surprisingly pleasant to use.
 
 ## Authorship & Contribution
 
